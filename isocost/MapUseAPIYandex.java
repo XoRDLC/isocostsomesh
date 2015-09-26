@@ -68,7 +68,7 @@ public class MapUseAPIYandex {
                     if (!noCoords) {
                         value = StaticXmlParser.getTextFromXml(value.trim());
                         coords[i] = value.split(" ");
-                    } else {System.out.println("no coords. " + this.getClass());}
+                    } else {System.out.println("no coords. i: " + i + ". address: " + addresses[i][0] + "\t(" + this.getClass() + ")");}
 
                 } else {
                     System.out.println("Ошибка в запросе к геокодеру. /n" + con.getResponseCode() + "\t"
