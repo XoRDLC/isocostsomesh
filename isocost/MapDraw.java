@@ -3,37 +3,54 @@ package isocost;
 public class MapDraw {
 
     String getCenterCoords(String[][] sCoords) {
-        Double[][] coords = new Double[sCoords.length][2];
-        int iNumberOfIntervals, iMaxInterY =0 , iMaxInterX =0;
-        int iNumberOfElements = coords.length;
+        Double[][] coords, dTempCoords;
+        int iNumberOfIntervals, iMaxInterY, iMaxInterX;
+        int iNumberOfElements;
         int[] iValueOfIntervCountX, iValueOfIntervCountY;
         double[] dIntervalRangeValueX, dIntervalRangeValueY;
         double dLenghtOfIntervalX, dLenghtOfIntervalY;
-        double dAverageX=0, dAverageY=0;
-        int iCountC=0;       
+        double dAverageX, dAverageY;
+        int tempCount, iCountC;
         double minX, maxX, minY, maxY;
-        //проверка на null, пока топорна€. ЅерЄм вторую строку
+  
+        //инициализаци€
+        coords = new Double[sCoords.length][2];
+        iMaxInterY = 0;
+        iMaxInterX = 0;
+        dAverageX = 0;
+        dAverageY = 0;
+        tempCount = 0;
+        iCountC = 0;
+        // конец блока инициализации
+        
+        for(int i=0; i<sCoords.length;i++){
+            if(sCoords[i][0]!=(null)&&sCoords[i][1]!=(null)){
+                //System.out.println("sCoords[" + i+ "][0]: " + sCoords[i][0] + ". sCoords[" +i+"][1]: " + sCoords[i][1]);
+                coords[tempCount][0]=Double.parseDouble(sCoords[i][0]);
+                coords[tempCount++][1]=Double.parseDouble(sCoords[i][1]);
+            }
+        }
+        
+        dTempCoords = coords;
+        coords = new Double[tempCount][2];
+        iNumberOfElements = coords.length;
+        
+        for(int i=0; i<tempCount; i++){
+            coords[i][0]=dTempCoords[i][0];
+            coords[i][1]=dTempCoords[i][1];
+        }
 
-        try {
-            minX = Double.parseDouble(sCoords[0][1]);
-            maxX = Double.parseDouble(sCoords[0][1]);
-            minY = Double.parseDouble(sCoords[0][0]);
-            maxY = Double.parseDouble(sCoords[0][0]);
-        } catch (NullPointerException e) {
-            minX = Double.parseDouble(sCoords[1][1]);
-            maxX = Double.parseDouble(sCoords[1][1]);
-            minY = Double.parseDouble(sCoords[1][0]);
-            maxY = Double.parseDouble(sCoords[1][0]);
-        }
+            minX = coords[0][1];
+            maxX = coords[0][1];
+            minY = coords[0][0];
+            maxY = coords[0][0];
+
         for (int i = 0; i < iNumberOfElements; i++) {
-            try{coords[i][0]= Double.parseDouble(sCoords[i][0]);
-                coords[i][1]= Double.parseDouble(sCoords[i][1]);
-                if (coords[i][1]>maxX) maxX = (coords[i][1]);
-                if (coords[i][1]<minX) minX = (coords[i][1]);
-                if (coords[i][0]>maxY) maxY = (coords[i][0]);
-                if (coords[i][0]<minY) minY = (coords[i][0]);}
-            catch(NullPointerException e){System.out.println("Null in cycle. " + this.getClass()); }
-        }
+            if (coords[i][1] > maxX) maxX = (coords[i][1]);
+            if (coords[i][1] < minX) minX = (coords[i][1]);
+            if (coords[i][0] > maxY) maxY = (coords[i][0]);
+            if (coords[i][0] < minY) minY = (coords[i][0]);
+        }      
         
         if(sCoords.length>10){
         
@@ -89,8 +106,7 @@ public class MapDraw {
             if (coords[i][1] <= dIntervalRangeValueX[iMaxInterX]
                     && coords[i][1] > (dIntervalRangeValueX[iMaxInterX] - dLenghtOfIntervalX)
                     && coords[i][0] <= dIntervalRangeValueY[iMaxInterY]
-                    && coords[i][0] > (dIntervalRangeValueY[iMaxInterY] - dLenghtOfIntervalY)
-                    &&coords[i][1]!=null&&coords[i][0]!=null) {
+                    && coords[i][0] > (dIntervalRangeValueY[iMaxInterY] - dLenghtOfIntervalY)) {
                 //System.out.println("thhh");
                 dAverageX += coords[i][1];
                 dAverageY += coords[i][0];
